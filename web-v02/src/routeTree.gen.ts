@@ -7,7 +7,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutMainImport } from './routes/_layout-main'
 import { Route as LayoutAuthImport } from './routes/_layout-auth'
-import { Route as LayoutAuthLoginImport } from './routes/_layout-auth/login'
 
 // Create Virtual Routes
 
@@ -17,6 +16,7 @@ const LayoutMainCategoriesLazyImport = createFileRoute(
   '/_layout-main/categories',
 )()
 const LayoutMainAboutLazyImport = createFileRoute('/_layout-main/about')()
+const LayoutAuthLoginLazyImport = createFileRoute('/_layout-auth/login')()
 
 // Create/Update Routes
 
@@ -58,10 +58,12 @@ const LayoutMainAboutLazyRoute = LayoutMainAboutLazyImport.update({
   import('./routes/_layout-main/about.lazy').then((d) => d.Route),
 )
 
-const LayoutAuthLoginRoute = LayoutAuthLoginImport.update({
+const LayoutAuthLoginLazyRoute = LayoutAuthLoginLazyImport.update({
   path: '/login',
   getParentRoute: () => LayoutAuthRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_layout-auth/login.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -76,7 +78,7 @@ declare module '@tanstack/react-router' {
       parentRoute: typeof rootRoute
     }
     '/_layout-auth/login': {
-      preLoaderRoute: typeof LayoutAuthLoginImport
+      preLoaderRoute: typeof LayoutAuthLoginLazyImport
       parentRoute: typeof LayoutAuthImport
     }
     '/_layout-main/about': {
@@ -101,7 +103,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  LayoutAuthRoute.addChildren([LayoutAuthLoginRoute]),
+  LayoutAuthRoute.addChildren([LayoutAuthLoginLazyRoute]),
   LayoutMainRoute.addChildren([
     LayoutMainAboutLazyRoute,
     LayoutMainCategoriesLazyRoute,

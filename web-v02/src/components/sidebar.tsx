@@ -1,14 +1,16 @@
 import { routes } from "@/lib/routes";
+import usePageStore from "@/store/page-store";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi2";
+import { Button } from "./ui/button";
 
 export default function Sidebar() {
   const [openSidebar, setOpenSidebar] = useState(true);
+  const { setPageName, name } = usePageStore();
 
-  const handleToggleSidebar = () => {
-    setOpenSidebar(!openSidebar);
-  };
+  const handleToggleSidebar = () => setOpenSidebar(!openSidebar);
+
   return (
     <div
       className="border-r  p-4 ml-auto flex flex-col gap-4"
@@ -26,18 +28,25 @@ export default function Sidebar() {
           )}
         </button>
       </div>
-      <div>
-        {routes.map((i) => (
-          <Link
-            to={i.path}
-            className="flex items-center gap-2 px-2 rounded-md hover:bg-accent"
-          >
-            <div className="py-2">
-              <i.icon size={18} />
-            </div>
-            {openSidebar && <span>{i.page}</span>}
-          </Link>
-        ))}
+      <div className="flex gap-y-2 flex-col">
+        {routes.map((i) => {
+          const isCurrentPage = i.page === name;
+          return (
+            <Button
+              key={i.path}
+              asChild
+              variant={isCurrentPage ? "default" : "ghost"}
+              className={`flex items-center gap-1 justify-start ${isCurrentPage ? "bg-accent-foreground hover:bg-accent-foreground hover:text-accent" : "bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-sm"}`}
+            >
+              <Link to={i.path} onClick={() => setPageName(i.page)}>
+                <div className="py-2">
+                  <i.icon size={18} />
+                </div>
+                {openSidebar && <span className="mt-0.5">{i.page}</span>}
+              </Link>
+            </Button>
+          );
+        })}
       </div>
     </div>
   );

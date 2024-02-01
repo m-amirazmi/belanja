@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 export default function Header() {
   const { name } = usePageStore();
   return (
-    <div className="border-b p-4 flex items-center">
+    <div className="border-b p-4 flex items-center sticky top-0 left-0 bg-background">
       <div className="w-[200px] flex items-center">
         <span className="text-lg font-bold tracking-widest">BELANJA.</span>
       </div>

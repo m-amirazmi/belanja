@@ -13,8 +13,11 @@ export default function Sidebar() {
 
   return (
     <div
-      className="border-r  p-4 ml-auto flex flex-col gap-4"
-      style={{ width: openSidebar ? "200px" : "auto" }}
+      className="border-r  p-4 ml-auto flex flex-col gap-4 sticky top-[70px] bg-background"
+      style={{
+        width: openSidebar ? "200px" : "auto",
+        height: "calc(100vh - 70px)",
+      }}
     >
       <div className="flex">
         <button

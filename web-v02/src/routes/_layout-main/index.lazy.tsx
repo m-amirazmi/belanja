@@ -1,7 +1,7 @@
 import useInitialPageName from "@/hooks/use-initial-page-name";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createLazyFileRoute("/_layout-main/")({
   component: Index,
 });
 

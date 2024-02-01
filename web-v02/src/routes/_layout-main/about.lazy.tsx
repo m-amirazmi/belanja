@@ -2,7 +2,7 @@ import usePageStore from "@/store/page-store";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createLazyFileRoute("/about")({
+export const Route = createLazyFileRoute("/_layout-main/about")({
   component: About,
 });
 

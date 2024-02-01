@@ -2,7 +2,7 @@ import { Outlet } from "@tanstack/react-router";
 import Header from "./header";
 import Sidebar from "./sidebar";
 
-export default function Layout() {
+export default function LayoutMain() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}

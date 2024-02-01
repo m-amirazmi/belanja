@@ -5,65 +5,95 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LayoutMainImport } from './routes/_layout-main'
+import { Route as LayoutAuthImport } from './routes/_layout-auth'
+import { Route as LayoutAuthLoginImport } from './routes/_layout-auth/login'
 
 // Create Virtual Routes
 
-const RecordsLazyImport = createFileRoute('/records')()
-const LoginLazyImport = createFileRoute('/login')()
-const CategoriesLazyImport = createFileRoute('/categories')()
-const AboutLazyImport = createFileRoute('/about')()
-const IndexLazyImport = createFileRoute('/')()
+const LayoutMainIndexLazyImport = createFileRoute('/_layout-main/')()
+const LayoutMainRecordsLazyImport = createFileRoute('/_layout-main/records')()
+const LayoutMainCategoriesLazyImport = createFileRoute(
+  '/_layout-main/categories',
+)()
+const LayoutMainAboutLazyImport = createFileRoute('/_layout-main/about')()
 
 // Create/Update Routes
 
-const RecordsLazyRoute = RecordsLazyImport.update({
-  path: '/records',
+const LayoutMainRoute = LayoutMainImport.update({
+  id: '/_layout-main',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/records.lazy').then((d) => d.Route))
+} as any)
 
-const LoginLazyRoute = LoginLazyImport.update({
-  path: '/login',
+const LayoutAuthRoute = LayoutAuthImport.update({
+  id: '/_layout-auth',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
+} as any)
 
-const CategoriesLazyRoute = CategoriesLazyImport.update({
-  path: '/categories',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/categories.lazy').then((d) => d.Route))
-
-const AboutLazyRoute = AboutLazyImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
-
-const IndexLazyRoute = IndexLazyImport.update({
+const LayoutMainIndexLazyRoute = LayoutMainIndexLazyImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+  getParentRoute: () => LayoutMainRoute,
+} as any).lazy(() =>
+  import('./routes/_layout-main/index.lazy').then((d) => d.Route),
+)
+
+const LayoutMainRecordsLazyRoute = LayoutMainRecordsLazyImport.update({
+  path: '/records',
+  getParentRoute: () => LayoutMainRoute,
+} as any).lazy(() =>
+  import('./routes/_layout-main/records.lazy').then((d) => d.Route),
+)
+
+const LayoutMainCategoriesLazyRoute = LayoutMainCategoriesLazyImport.update({
+  path: '/categories',
+  getParentRoute: () => LayoutMainRoute,
+} as any).lazy(() =>
+  import('./routes/_layout-main/categories.lazy').then((d) => d.Route),
+)
+
+const LayoutMainAboutLazyRoute = LayoutMainAboutLazyImport.update({
+  path: '/about',
+  getParentRoute: () => LayoutMainRoute,
+} as any).lazy(() =>
+  import('./routes/_layout-main/about.lazy').then((d) => d.Route),
+)
+
+const LayoutAuthLoginRoute = LayoutAuthLoginImport.update({
+  path: '/login',
+  getParentRoute: () => LayoutAuthRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      preLoaderRoute: typeof IndexLazyImport
+    '/_layout-auth': {
+      preLoaderRoute: typeof LayoutAuthImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      preLoaderRoute: typeof AboutLazyImport
+    '/_layout-main': {
+      preLoaderRoute: typeof LayoutMainImport
       parentRoute: typeof rootRoute
     }
-    '/categories': {
-      preLoaderRoute: typeof CategoriesLazyImport
-      parentRoute: typeof rootRoute
+    '/_layout-auth/login': {
+      preLoaderRoute: typeof LayoutAuthLoginImport
+      parentRoute: typeof LayoutAuthImport
     }
-    '/login': {
-      preLoaderRoute: typeof LoginLazyImport
-      parentRoute: typeof rootRoute
+    '/_layout-main/about': {
+      preLoaderRoute: typeof LayoutMainAboutLazyImport
+      parentRoute: typeof LayoutMainImport
     }
-    '/records': {
-      preLoaderRoute: typeof RecordsLazyImport
-      parentRoute: typeof rootRoute
+    '/_layout-main/categories': {
+      preLoaderRoute: typeof LayoutMainCategoriesLazyImport
+      parentRoute: typeof LayoutMainImport
+    }
+    '/_layout-main/records': {
+      preLoaderRoute: typeof LayoutMainRecordsLazyImport
+      parentRoute: typeof LayoutMainImport
+    }
+    '/_layout-main/': {
+      preLoaderRoute: typeof LayoutMainIndexLazyImport
+      parentRoute: typeof LayoutMainImport
     }
   }
 }
@@ -71,9 +101,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  IndexLazyRoute,
-  AboutLazyRoute,
-  CategoriesLazyRoute,
-  LoginLazyRoute,
-  RecordsLazyRoute,
+  LayoutAuthRoute.addChildren([LayoutAuthLoginRoute]),
+  LayoutMainRoute.addChildren([
+    LayoutMainAboutLazyRoute,
+    LayoutMainCategoriesLazyRoute,
+    LayoutMainRecordsLazyRoute,
+    LayoutMainIndexLazyRoute,
+  ]),
 ])

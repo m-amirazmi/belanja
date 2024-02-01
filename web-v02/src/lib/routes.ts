@@ -5,7 +5,18 @@ import {
 } from "react-icons/hi2";
 
 export const routes = [
-  { path: "/", page: "Dashboard", icon: HiOutlineHome },
-  { path: "/records", page: "Records", icon: HiOutlineCircleStack },
-  { path: "/categories", page: "Categories", icon: HiOutlineBookmark },
+  { isAuth: false, path: "/", page: "Dashboard", icon: HiOutlineHome },
+  {
+    isAuth: false,
+    path: "/records",
+    page: "Records",
+    icon: HiOutlineCircleStack,
+  },
+  {
+    isAuth: false,
+    path: "/categories",
+    page: "Categories",
+    icon: HiOutlineBookmark,
+  },
+  { isAuth: true, path: "/login", page: "Login", icon: HiOutlineBookmark },
 ];

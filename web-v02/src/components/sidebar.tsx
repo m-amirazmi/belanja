@@ -2,7 +2,11 @@ import { routes } from "@/lib/routes";
 import usePageStore from "@/store/page-store";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi2";
+import {
+  HiChevronDoubleLeft,
+  HiChevronDoubleRight,
+  HiArrowRightOnRectangle,
+} from "react-icons/hi2";
 import { Button } from "./ui/button";
 
 export default function Sidebar() {
@@ -20,8 +24,9 @@ export default function Sidebar() {
       }}
     >
       <div className="flex">
-        <button
-          className="ml-auto p-2 border rounded-md"
+        <Button
+          variant="outline"
+          className="ml-auto px-2 flex items-center gap-2 justify-start"
           onClick={handleToggleSidebar}
         >
           {openSidebar ? (
@@ -29,11 +34,12 @@ export default function Sidebar() {
           ) : (
             <HiChevronDoubleRight size={18} />
           )}
-        </button>
+        </Button>
       </div>
       <div className="flex gap-y-2 flex-col">
         {routes.map((i) => {
           const isCurrentPage = i.page === name;
+          if (i.isAuth) return;
           return (
             <Button
               key={i.path}
@@ -42,9 +48,7 @@ export default function Sidebar() {
               className={`px-2 flex items-center gap-2 justify-start ${isCurrentPage ? "bg-accent-foreground hover:bg-accent-foreground hover:text-accent" : "bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-sm"}`}
             >
               <Link to={i.path} onClick={() => setPageName(i.page)}>
-                <div className="py-2">
-                  <i.icon size={18} />
-                </div>
+                <div className="py-2">{i.icon && <i.icon size={18} />}</div>
                 {openSidebar && (
                   <span className="mt-0.5 text-base">{i.page}</span>
                 )}
@@ -53,6 +57,18 @@ export default function Sidebar() {
           );
         })}
       </div>
+      <Button
+        asChild
+        variant="outline"
+        className="mt-auto px-2 flex items-center gap-2 justify-start"
+      >
+        <Link to="/login" onClick={() => setPageName("Login")}>
+          <div className="py-2">
+            <HiArrowRightOnRectangle size={18} />
+          </div>
+          {openSidebar && <span className="mt-0.5 text-base">Log Out</span>}
+        </Link>
+      </Button>
     </div>
   );
 }

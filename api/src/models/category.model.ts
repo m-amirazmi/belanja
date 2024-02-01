@@ -1,24 +1,21 @@
-import { model, Document, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import slugify from "slugify";
+import { CategoryType, ICategory } from "../utils/types";
 
-enum CategoryType {
-  earn = "earn",
-  spend = "spend",
-}
-
-interface ICategory extends Document {
-  name: string;
-  slug: string;
-  type: CategoryType;
-  icon: string;
-}
-
-const categorySchema = new Schema({
-  name: { type: String, required: true, unique: true },
-  slug: { type: String },
-  type: { type: String, enum: Object.values(CategoryType), required: true },
-  icon: { type: String },
-});
+const categorySchema = new Schema(
+  {
+    name: { type: String, required: true, unique: true },
+    slug: { type: String },
+    type: { type: String, enum: Object.values(CategoryType), required: true },
+    icon: { type: String },
+  },
+  {
+    timestamps: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
+  }
+);
 
 categorySchema.pre<ICategory>("save", function (next) {
   if (this.isModified("name")) {

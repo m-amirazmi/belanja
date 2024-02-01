@@ -27,11 +27,9 @@ const show = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const category = await Category.findById(id);
-
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
     return res.json(category);
   } catch (error) {
     console.error("Error fetching category:", error);
@@ -43,16 +41,12 @@ const update = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { icon } = req.body;
-
     const category = await Category.findById(id);
-
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
     category.icon = icon;
     const updatedCategory = await category.save();
-
     return res.json(updatedCategory);
   } catch (error) {
     console.error("Error updating category:", error);
@@ -63,15 +57,11 @@ const update = async (req: Request, res: Response) => {
 const destroy = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
     const category = await Category.findById(id);
-
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
     await category.deleteOne();
-
     return res.json({ message: "Category removed successfully" });
   } catch (error) {
     console.error("Error removing category:", error);

@@ -36,13 +36,15 @@ export default function Sidebar() {
               key={i.path}
               asChild
               variant={isCurrentPage ? "default" : "ghost"}
-              className={`flex items-center gap-1 justify-start ${isCurrentPage ? "bg-accent-foreground hover:bg-accent-foreground hover:text-accent" : "bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-sm"}`}
+              className={`px-2 flex items-center gap-2 justify-start ${isCurrentPage ? "bg-accent-foreground hover:bg-accent-foreground hover:text-accent" : "bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-sm"}`}
             >
               <Link to={i.path} onClick={() => setPageName(i.page)}>
                 <div className="py-2">
                   <i.icon size={18} />
                 </div>
-                {openSidebar && <span className="mt-0.5">{i.page}</span>}
+                {openSidebar && (
+                  <span className="mt-0.5 text-base">{i.page}</span>
+                )}
               </Link>
             </Button>
           );

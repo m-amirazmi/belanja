@@ -1,4 +1,5 @@
 import useInitialPageName from "@/hooks/use-initial-page-name";
+import DashboardPage from "@/pages/dashboard";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/_layout-main/")({
@@ -7,10 +8,5 @@ export const Route = createLazyFileRoute("/_layout-main/")({
 
 function Index() {
   useInitialPageName("Dashboard");
-
-  return (
-    <div className="">
-      <h3>Welcome Home!</h3>
-    </div>
-  );
+  return <DashboardPage />;
 }

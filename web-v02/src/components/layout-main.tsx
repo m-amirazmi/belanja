@@ -10,7 +10,7 @@ export default function LayoutMain() {
 
   useEffect(() => {
     if (!isAuthenticate) navigate({ to: "/login" });
-  }, [isAuthenticate]);
+  }, [isAuthenticate, navigate]);
 
   if (!isAuthenticate) return null;
 
@@ -20,7 +20,7 @@ export default function LayoutMain() {
       <Header />
       <div className="flex-1 flex">
         <Sidebar />
-        <div className="flex-1 p-4">
+        <div className="flex-1">
           <Outlet />
         </div>
       </div>

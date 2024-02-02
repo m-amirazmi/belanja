@@ -7,7 +7,7 @@ export default function Header() {
   const { name } = usePageStore();
   return (
     <div className="border-b p-4 flex items-center sticky top-0 left-0 bg-background">
-      <div className="w-[200px]">
+      <div className="w-[295px]">
         <span className="text-lg font-bold tracking-widest">BELANJA.</span>
       </div>
       <p className="text-lg">{name}</p>

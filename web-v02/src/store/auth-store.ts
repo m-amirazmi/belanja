@@ -6,7 +6,7 @@ type Store = {
 };
 
 const useAuthStore = create<Store>((set) => ({
-  isAuthenticate: false,
+  isAuthenticate: true,
   setIsAuthenticate: (value) => set(() => ({ isAuthenticate: value })),
 }));
 

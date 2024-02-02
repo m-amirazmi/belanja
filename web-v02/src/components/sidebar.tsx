@@ -17,9 +17,9 @@ export default function Sidebar() {
 
   return (
     <div
-      className="border-r  p-4 ml-auto flex flex-col gap-4 sticky top-[70px] bg-background"
+      className="border-r  p-8 ml-auto flex flex-col gap-4 sticky top-[70px] bg-background"
       style={{
-        width: openSidebar ? "200px" : "auto",
+        width: openSidebar ? "280px" : "auto",
         height: "calc(100vh - 70px)",
       }}
     >
@@ -42,16 +42,15 @@ export default function Sidebar() {
           if (i.isAuth) return;
           return (
             <Button
+              size="lg"
               key={i.path}
               asChild
               variant={isCurrentPage ? "default" : "ghost"}
-              className={`px-2 flex items-center gap-2 justify-start ${isCurrentPage ? "bg-primary hover:bg-primary hover:text-accent" : "bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-sm"}`}
+              className={`shadow-none px-2 flex items-center gap-2 justify-start ${isCurrentPage ? "bg-accent text-accent-foreground hover:bg-accent hover:text-accent-foreground" : "bg-background hover:bg-accent/50 hover:text-accent-foreground hover:shadow-sm"}`}
             >
               <Link to={i.path} onClick={() => setPageName(i.page)}>
                 <div className="py-2">{i.icon && <i.icon size={18} />}</div>
-                {openSidebar && (
-                  <span className="mt-0.5 text-base">{i.page}</span>
-                )}
+                {openSidebar && <span className="mt-0.5">{i.page}</span>}
               </Link>
             </Button>
           );

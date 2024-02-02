@@ -7,7 +7,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useInitialPageName from "@/hooks/use-initial-page-name";
 import useAuthStore from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
@@ -20,8 +19,6 @@ const formSchema = z.object({
 });
 
 export default function LoginPage() {
-  useInitialPageName("Login");
-
   const navigate = useNavigate();
   const { setIsAuthenticate } = useAuthStore();
 

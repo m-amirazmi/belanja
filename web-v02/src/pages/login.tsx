@@ -43,7 +43,7 @@ export default function LoginPage() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="space-y-8 w-80 mt-8"
+          className="space-y-8 w-full md:w-80 mt-8"
         >
           <div className="flex flex-col gap-y-4">
             <FormField

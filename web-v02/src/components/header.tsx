@@ -10,7 +10,7 @@ export default function Header() {
       <div className="w-[295px]">
         <span className="text-lg font-bold tracking-widest">BELANJA.</span>
       </div>
-      <p className="text-lg">{name}</p>
+      <p className="text-lg">2024 | {name}</p>
       <div className="ml-auto flex items-center">
         <Button variant="ghost" size="icon" onClick={() => {}}>
           <HiOutlineUserCircle size={22} />

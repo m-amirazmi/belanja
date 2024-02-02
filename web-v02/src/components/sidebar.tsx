@@ -23,19 +23,6 @@ export default function Sidebar() {
         height: "calc(100vh - 70px)",
       }}
     >
-      <div className="flex">
-        <Button
-          variant="outline"
-          className="ml-auto px-2 flex items-center gap-2 justify-start"
-          onClick={handleToggleSidebar}
-        >
-          {openSidebar ? (
-            <HiChevronDoubleLeft size={18} />
-          ) : (
-            <HiChevronDoubleRight size={18} />
-          )}
-        </Button>
-      </div>
       <div className="flex gap-y-2 flex-col">
         {routes.map((i) => {
           const isCurrentPage = i.page === name;
@@ -56,10 +43,23 @@ export default function Sidebar() {
           );
         })}
       </div>
+      <div className="flex mt-auto">
+        <Button
+          variant="outline"
+          className="ml-auto px-2 flex items-center gap-2 justify-start"
+          onClick={handleToggleSidebar}
+        >
+          {openSidebar ? (
+            <HiChevronDoubleLeft size={18} />
+          ) : (
+            <HiChevronDoubleRight size={18} />
+          )}
+        </Button>
+      </div>
       <Button
         asChild
         variant="outline"
-        className="mt-auto px-2 flex items-center gap-2 justify-start"
+        className="px-2 flex items-center gap-2 justify-start"
       >
         <Link to="/login" onClick={() => setPageName("Login")}>
           <div className="py-2">
